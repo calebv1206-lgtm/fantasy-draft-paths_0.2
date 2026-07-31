@@ -131,7 +131,7 @@ button:hover {
             #3a993f 45%,
             #236627 100%
         );
-}
+
     box-shadow:
         0 10px 20px rgba(0,0,0,.5),
         inset 0 1px 0 rgba(255,255,255,.30);
@@ -379,9 +379,14 @@ function showOptions(key) {
 
         btn.textContent = playerName(option);
 
-       btn.onclick = () => {
+      btn.onclick = () => {
 
-    picks.push(playerName(option));
+    const selectedPlayer =
+        playerName(option);
+
+    showPickPopup(selectedPlayer);
+
+    picks.push(selectedPlayer);
 
     historyDiv.innerHTML =
         "Current Picks:<br>" +
