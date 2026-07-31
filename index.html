@@ -84,48 +84,56 @@ h1 {
 /* Draft buttons */
 button {
     width: 100%;
-
     padding: 16px;
+    margin: 10px 0;
 
-    margin: 8px 0;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: .5px;
 
-    border: 1px solid #4e9d4e;
+    border-radius: 14px;
+    border: 1px solid #67c267;
 
-    border-radius: 12px;
+    cursor: pointer;
 
     background:
         linear-gradient(
             180deg,
-            #347534,
-            #245724
+            #4caf50 0%,
+            #2e7d32 50%,
+            #1b5e20 100%
         );
 
-    color: white;
-
-    font-size: 18px;
-    font-weight: bold;
-
-    cursor: pointer;
-
     box-shadow:
-        0 4px 10px rgba(0,0,0,.35);
+        0 6px 14px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.20);
 
     transition: all .15s ease;
 }
 
 button:hover {
+    transform: translateY(-3px);
+
     background:
         linear-gradient(
             180deg,
-            #3f8d3f,
-            #2c6a2c
+            #5fd564 0%,
+            #3d9641 50%,
+            #256c28 100%
         );
 
-    transform: translateY(-2px);
+    box-shadow:
+        0 10px 20px rgba(0,0,0,.5),
+        inset 0 1px 0 rgba(255,255,255,.30);
 }
 
 button:active {
     transform: translateY(1px);
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,.4),
+        inset 0 1px 0 rgba(255,255,255,.15);
 }
 
 h3 {
