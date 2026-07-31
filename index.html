@@ -91,6 +91,13 @@ h1 {
 
     margin-bottom: 20px;
 }
+    .position-label {
+    font-size: 12px;
+    color: #a8ffb0;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
 /* Draft buttons */
 button {
     width: 100%;
@@ -337,21 +344,38 @@ function showPickPopup(name) {
     const popup =
         document.getElementById("pick-popup");
 
-    popup.innerHTML =
-        `
-        <div style="font-size:24px;color:#8cff96;">
-            DRAFT PICK
-        </div>
+   const position =
+    Object.keys(players).find(
+        id => players[id] === name
+    );
 
-        <div style="padding:15px 0;">
-            ${name}
-        </div>
+popup.innerHTML =
+    `
+    <div style="font-size:24px;color:#8cff96;">
+        DRAFT PICK
+    </div>
 
-        <div style="font-size:24px;color:#8cff96;">
-            🏈
-        </div>
-        `;
+    <div style="
+        font-size:20px;
+        color:#a8ffb0;
+        letter-spacing:2px;
+        margin-top:10px;
+    ">
+        ${positions[position] || ""}
+    </div>
 
+    <div style="
+        padding:15px 0;
+        font-size:72px;
+        font-weight:bold;
+    ">
+        ${name}
+    </div>
+
+    <div style="font-size:24px;color:#8cff96;">
+        🏈
+    </div>
+    `;
     popup.style.visibility = "visible";
     popup.style.opacity = "1";
 
