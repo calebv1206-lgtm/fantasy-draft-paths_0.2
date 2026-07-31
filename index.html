@@ -339,15 +339,10 @@ console.log(data["START"]);
 function playerName(id) {
     return players[id] || id;
 }
-function showPickPopup(name) {
+function showPickPopup(id) {
 
     const popup =
         document.getElementById("pick-popup");
-
-   const position =
-    Object.keys(players).find(
-        id => players[id] === name
-    );
 
 popup.innerHTML =
 `
@@ -382,7 +377,7 @@ popup.innerHTML =
     🏈
 </div>
 `;
-``
+
     popup.style.visibility = "visible";
     popup.style.opacity = "1";
 
