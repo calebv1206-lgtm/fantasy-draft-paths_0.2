@@ -274,6 +274,7 @@ const PLAYERS_URL = "./players.csv";
 
 let data = {};
 let players = {};
+let positions = {};
 
 const optionsDiv = document.getElementById("options");
 const historyDiv = document.getElementById("history");
@@ -316,6 +317,8 @@ Promise.all([
 
         players[cols[0].trim()] =
             cols[1].trim();
+        positions[cols[0].trim()] =
+            cols[2] ? cols[2].trim() : "";
     });
     
 console.log(players);
@@ -377,8 +380,14 @@ function showOptions(key) {
 
         const btn = document.createElement("button");
 
-        btn.textContent = playerName(option);
-
+        btn.innerHTML =
+    `<div style="font-size:12px;opacity:0.8;">
+        ${positions[option] || ""}
+     </div>
+     <div>
+        ${playerName(option)}
+     </div>`;
+        
       btn.onclick = () => {
 
     const selectedPlayer =
