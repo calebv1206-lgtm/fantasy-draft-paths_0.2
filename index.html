@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+
+    color: white;
+    min-height: 100vh;
+    position: relative;
+
+   background:
+    radial-gradient(
+        circle at center,
+        rgba(76,175,80,.45) 0%,
+        rgba(76,175,80,.20) 35%,
+        rgba(76,175,80,.08) 55%,
+        rgba(0,0,0,.95) 80%
+    ),
+    linear-gradient(
+        180deg,
+        #050505 0%,
+        #0b0b0b 50%,
+        #000000 100%
+    );
+}
+
+/* Football field lines */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+
+    opacity: 0.05;
+
+    background-image:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,.5) 0px,
+            rgba(255,255,255,.5) 2px,
+            transparent 2px,
+            transparent 80px
+        );
+}
+
+/* Comic-book dot texture */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+
+    opacity: 0.025;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.4) 1px,
+            transparent 1px
+        );
+
+    background-size: 32px 32px;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #cccccc;
+    margin-bottom: 25px;
+}
+
+/* Current Picks box */
+#history {
+    background:
+        linear-gradient(
+            180deg,
+            #214021,
+            #152915
+        );
+
+    color: white;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    border: 1px solid #3f7f3f;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.4);
+
+    margin-bottom: 20px;
+}
+
+/* Draft buttons */
+button {
+    width: 100%;
+
+    padding: 16px;
+
+    margin: 8px 0;
+
+    border: 1px solid #4e9d4e;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #347534,
+            #245724
+        );
+
+    color: white;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px rgba(0,0,0,.35);
+
+    transition: all .15s ease;
+}
+
+button:hover {
+    background:
+        linear-gradient(
+            180deg,
+            #3f8d3f,
+            #2c6a2c
+        );
+
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+h3 {
+    text-align: center;
+    color: white;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #2a2a2a;
+    margin: 20px 0;
+}
+
+</style>
+
+    <meta charset="UTF-8">
+    <title>Fantasy Draft Assistant</title>
+</head>
+
+<body>
+
+<h1>🏈 Fantasy Draft Assistant</h1>
+
+<div class="subtitle">
+Personal Draft Planner
+</div>
+
+<div class="subtitle">
+Draft Path Planner
+</div>
+
+<div id="history">
+Current Picks:
+</div>
+
+<div id="options">
+</div>
+
+<script>
+
+const PATHS_URL = "./draftpaths.csv";
+const PLAYERS_URL = "./players.csv";
+
+let data = {};
+let players = {};
+
+const optionsDiv = document.getElementById("options");
+const historyDiv = document.getElementById("history");
+
+let picks = [];
+
+Promise.all([
+    fetch(PATHS_URL).then(r => r.text()),
+    fetch(PLAYERS_URL).then(r => r.text())
+])
+.then(([pathsCsv, playersCsv]) => {
+
+    pathsCsv
+        .trim()
+        .split("\n")
+        .slice(1)
+        .forEach(row => {
+
+            const cols = row.split("\t");
+
+            const key = cols[0].trim();
+
+            const options = cols
+                .slice(1)
+                .map(x => x.trim())
+                .filter(x => x);
+
+            data[key] = options;
+        });
+
+    playersCsv
+    .trim()
+    .split("\n")
+    .slice(1)
+    .forEach(row => {
+
+        const cols = row.split(",");
+
+        if (cols.length < 2) return;
+
+        players[cols[0].trim()] =
+            cols[1].trim();
+    });
+    
+console.log(players);
+console.log(players["A01"]);
+console.log(data);
+console.log(data["START"]);
+    
+    showOptions("START");
+});
+
+function playerName(id) {
+    return players[id] || id;
+}
+
+function showOptions(key) {
+
+    optionsDiv.innerHTML = "";
+
+    const options = data[key];
+
+    if (!options || options.length === 0) {
+        optionsDiv.innerHTML = "<h3>You Got It From Here</h3>";
+        return;
+    }
+
+    options.forEach(option => {
+
+        const btn = document.createElement("button");
+
+        btn.textContent = playerName(option);
+
+        btn.onclick = () => {
+
+            picks.push(playerName(option));
+
+            historyDiv.innerHTML =
+                "Current Picks:<br>" +
+                picks.join(" → ");
+
+            showOptions(option);
+        };
+
+        optionsDiv.appendChild(btn);
+    });
+}
+
+</script>
+    
+</body>
+</html>
