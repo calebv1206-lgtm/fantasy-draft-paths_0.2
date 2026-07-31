@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https
 <style>
 
 body {
@@ -195,10 +193,7 @@ button:active {
         inset 0 1px 0 rgba(255,255,255,.15);
 }
 
-button:hover::before {
-    left: 100%;
-} 
-    button::before {
+button::before {
     content: "";
 
     position: absolute;
@@ -217,6 +212,10 @@ button:hover::before {
         );
 
     transition: .5s;
+}
+
+button:hover::before {
+    left: 100%;
 }
 
 #pick-popup {
