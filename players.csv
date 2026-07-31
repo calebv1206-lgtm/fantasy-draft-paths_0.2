@@ -1,9 +1,9 @@
-ID,Player
-A01,Ja'Marr Chase
-A02,CeeDee Lamb
-A03,Bijan Robinson
-A04,Justin Jefferson
-B01,Garrett Wilson
-B02,Puka Nacua
-B03,Drake London
-B04,Breece Hall
+ID,Player,Position
+A01,Ja'Marr Chase,WR
+A02,CeeDee Lamb,WR
+A03,Bijan Robinson,RB
+A04,Justin Jefferson,WR
+B01,Garrett Wilson,WR
+B02,Puka Nacua,WR
+B03,Drake London,WR
+B04,Breece Hall,RB
