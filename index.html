@@ -350,32 +350,39 @@ function showPickPopup(name) {
     );
 
 popup.innerHTML =
-    `
-    <div style="font-size:24px;color:#8cff96;">
-        DRAFT PICK
-    </div>
+`
+<div style="
+    font-size:24px;
+    color:#8cff96;
+    letter-spacing:2px;
+">
+    DRAFT PICK
+</div>
 
-    <div style="
-        font-size:20px;
-        color:#a8ffb0;
-        letter-spacing:2px;
-        margin-top:10px;
-    ">
-        ${positions[position] || ""}
-    </div>
+<div style="
+    font-size:22px;
+    color:white;
+    margin-top:15px;
+">
+    ${positions[id] || ""}
+</div>
 
-    <div style="
-        padding:15px 0;
-        font-size:72px;
-        font-weight:bold;
-    ">
-        ${name}
-    </div>
+<div style="
+    padding:15px 0;
+    font-size:72px;
+    font-weight:bold;
+">
+    ${playerName(id)}
+</div>
 
-    <div style="font-size:24px;color:#8cff96;">
-        🏈
-    </div>
-    `;
+<div style="
+    font-size:24px;
+    color:#8cff96;
+">
+    🏈
+</div>
+`;
+``
     popup.style.visibility = "visible";
     popup.style.opacity = "1";
 
@@ -417,7 +424,7 @@ function showOptions(key) {
     const selectedPlayer =
         playerName(option);
 
-    showPickPopup(selectedPlayer);
+    showPickPopup(option);
 
     picks.push(selectedPlayer);
 
