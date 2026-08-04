@@ -117,13 +117,17 @@ h1 {
 
     backdrop-filter: blur(6px);
 }
-   .position-label {
+    .position-label {
     display: inline-block;
 
     font-size: 11px;
     font-weight: bold;
 
     color: white;
+
+    background: rgba(255,255,255,.15);
+
+    border: 1px solid rgba(255,255,255,.20);
 
     border-radius: 999px;
 
@@ -134,25 +138,6 @@ h1 {
     text-transform: uppercase;
 
     letter-spacing: 1px;
-}
-    .position-label.WR {
-    background: #1565c0;
-}
-
-.position-label.RB {
-    background: #2e7d32;
-}
-
-.position-label.QB {
-    background: #6a1b9a;
-}
-
-.position-label.TE {
-    background: #ef6c00;
-}
-
-.position-label.K {
-    background: #607d8b;
 }
 /* Draft buttons */
 button {
@@ -295,12 +280,6 @@ Current Picks:
 Round 1
 </div>
 
-<div style="text-align:center;">
-    <button id="back-button">
-        ← Undo Last Pick
-    </button>
-</div>
-
 <div id="options">
 </div>
 
@@ -319,7 +298,6 @@ const optionsDiv = document.getElementById("options");
 const historyDiv = document.getElementById("history");
 
 let picks = [];
-let pathHistory = ["START"];
 
 Promise.all([
     fetch(PATHS_URL).then(r => r.text()),
@@ -424,546 +402,17 @@ popup.innerHTML =
 
     }, 1500);
 }
-    document
-    .getElementById("back-button")
-    .onclick = () => {
-
-    if (pathHistory.length <= 1) return;
-
-    pathHistory.pop();
-
-    picks.pop();
-
-    const previous =
-        pathHistory[pathHistory.length - 1];
-
-    historyDiv.innerHTML =
-        "Current Picks:<br>" +
-        picks.join(" → ");
-
-    document.getElementById("round-display")
-        .innerHTML =
-        "Round " + (picks.length + 1);
-
-    showOptions(previous);
-};
-
-    options.forEach(option => {
-
-        const btn = document.createElement("button");
-
-       btn.innerHTML =
-`
-<div style="text-align:center;">
-    <div class="position-label ${positions[option]}">
-        ${positions[option] || ""}
-    </div>
-
-    <div>
-        ${playerName(option)}
-    </div>
-</div>
-`;
-        <!DOCTYPE html>
-<html>
-<head>
-<style>
-
-body {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    color: white;
-    min-height: 100vh;
-    position: relative;
-
-    background:
-        linear-gradient(
-            rgba(0,0,0,.70),
-            rgba(0,0,0,.70)
-        ),
-        url("image field.jpg");
-
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-
-/* Comic-book dot texture */
-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
-
-    opacity: 0.025;
-
-    background-image:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.4) 1px,
-            transparent 1px
-        );
-
-    background-size: 32px 32px;
-}
-
-h1 {
-    font-family: 'Bebas Neue', sans-serif;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    gap: 16px;
-
-    text-align: center;
-
-    color: white;
-
-    font-size: 50px;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 10px;
-}
-.title-icon {
-    font-size: 0.8em;
-}
-
-.subtitle {
-    text-align: center;
-    color: #cccccc;
-    margin-bottom: 25px;
-}
-
-/* Current Picks box */
-#history {
-    background:
-        linear-gradient(
-            180deg,
-            #214021,
-            #152915
-        );
-
-    color: white;
-
-    padding: 15px;
-
-    border-radius: 12px;
-
-    border: 1px solid #3f7f3f;
-
-    box-shadow:
-        0 4px 15px rgba(0,0,0,.4);
-
-    margin-bottom: 20px;
-}
-
-#round-display {
-    width: fit-content;
-
-    margin: 0 auto 20px auto;
-
-    padding: 8px 20px;
-
-    background: rgba(0,0,0,.35);
-
-    border: 1px solid rgba(255,255,255,.15);
-
-    border-radius: 999px;
-
-    color: #8cff96;
-
-    font-size: 22px;
-    font-weight: bold;
-
-    backdrop-filter: blur(6px);
-}
-   .position-label {
-    display: inline-block;
-
-    font-size: 11px;
-    font-weight: bold;
-
-    color: white;
-
-    border-radius: 999px;
-
-    padding: 3px 10px;
-
-    margin-bottom: 6px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1px;
-}
-    .position-label.WR {
-    background: #1565c0;
-}
-
-.position-label.RB {
-    background: #2e7d32;
-}
-
-.position-label.QB {
-    background: #6a1b9a;
-}
-
-.position-label.TE {
-    background: #ef6c00;
-}
-
-.position-label.K {
-    background: #607d8b;
-}
-/* Draft buttons */
-button {
-    width: 100%;
-    padding: 16px;
-    margin: 10px 0;
-
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-
-    border: 1px solid #5ecb65;
-    border-radius: 14px;
-
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            180deg,
-            #56c75d 0%,
-            #2f8234 45%,
-            #1d5520 100%
-        );
-
-    box-shadow:
-        0 6px 16px rgba(0,0,0,.4);
-
-    transition: all .15s ease;
-}
-button:hover {
-    transform: translateY(-3px) scale(1.03);
-
-    background:
-        linear-gradient(
-            180deg,
-            #68dd70 0%,
-            #3a993f 45%,
-            #236627 100%
-        );
-
-    box-shadow:
-        0 10px 20px rgba(0,0,0,.5),
-        inset 0 1px 0 rgba(255,255,255,.30);
-}
-
-button:active {
-    transform: translateY(1px);
-
-    box-shadow:
-        0 3px 8px rgba(0,0,0,.4),
-        inset 0 1px 0 rgba(255,255,255,.15);
-}
-
-button::before {
-    content: "";
-
-    position: absolute;
-    top: 0;
-    left: -100%;
-
-    width: 100%;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.15),
-            transparent
-        );
-
-    transition: .5s;
-}
-
-button:hover::before {
-    left: 100%;
-}
-
-#pick-popup {
-    position: fixed;
-    inset: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    background: rgba(0,0,0,.85);
-
-    color: white;
-
-    font-size: 72px;
-    font-weight: bold;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: opacity .4s ease;
-
-    z-index: 9999;
-
-    text-align: center;
-}
-
-h3 {
-    text-align: center;
-    color: white;
-}
-
-hr {
-    border: none;
-    border-top: 1px solid #2a2a2a;
-    margin: 20px 0;
-}
-
-</style>
-
-    <meta charset="UTF-8">
-    <title>Fantasy Draft Assistant</title>
-</head>
-
-<body>
-
-<h1>
-    <span class="title-icon">🏈</span>
-    Fantasy Draft Assistant
-</h1>
-
-<div class="subtitle">
-Personal Draft Planner
-</div>
-
-<div id="history">
-Current Picks:
-</div>
-
-<div id="round-display">
-Round 1
-</div>
-
-<div style="text-align:center;">
-    <button id="back-button">
-        ← Undo Last Pick
-    </button>
-</div>
-
-<div id="options">
-</div>
-
-<div id="pick-popup"></div>
-
-<script>
-
-const PATHS_URL = "./draftpaths.csv";
-const PLAYERS_URL = "./players.csv";
-
-let data = {};
-let players = {};
-let positions = {};
-
-const optionsDiv = document.getElementById("options");
-const historyDiv = document.getElementById("history");
-
-let picks = [];
-let pathHistory = ["START"];
-
-Promise.all([
-    fetch(PATHS_URL).then(r => r.text()),
-    fetch(PLAYERS_URL).then(r => r.text())
-])
-.then(([pathsCsv, playersCsv]) => {
-
-    pathsCsv
-        .trim()
-        .split("\n")
-        .slice(1)
-        .forEach(row => {
-
-            const cols = row.split("\t");
-
-            const key = cols[0].trim();
-
-            const options = cols
-                .slice(1)
-                .map(x => x.trim())
-                .filter(x => x);
-
-            data[key] = options;
-        });
-
-    playersCsv
-    .trim()
-    .split("\n")
-    .slice(1)
-    .forEach(row => {
-
-        const cols = row.split(",");
-
-        if (cols.length < 2) return;
-
-        players[cols[0].trim()] =
-            cols[1].trim();
-        positions[cols[0].trim()] =
-            cols[2] ? cols[2].trim() : "";
-    });
-    
-console.log(players);
-console.log(players["A01"]);
-console.log(data);
-console.log(data["START"]);
-    
-    showOptions("START");
-});
-
-function playerName(id) {
-    return players[id] || id;
-}
-function showPickPopup(id) {
-
-    const popup =
-        document.getElementById("pick-popup");
-
-popup.innerHTML =
-`
-<div style="
-    font-size:24px;
-    color:#8cff96;
-    letter-spacing:2px;
-">
-    DRAFT PICK
-</div>
-
-<div style="
-    font-size:22px;
-    color:white;
-    margin-top:15px;
-">
-    ${positions[id] || ""}
-</div>
-
-<div style="
-    padding:15px 0;
-    font-size:72px;
-    font-weight:bold;
-">
-    ${playerName(id)}
-</div>
-
-<div style="
-    font-size:24px;
-    color:#8cff96;
-">
-    🏈
-</div>
-`;
-
-    popup.style.visibility = "visible";
-    popup.style.opacity = "1";
-
-    setTimeout(() => {
-
-        popup.style.opacity = "0";
-
-        setTimeout(() => {
-            popup.style.visibility = "hidden";
-        }, 400);
-
-    }, 1500);
-}
-    document
-    .getElementById("back-button")
-    .onclick = () => {
-
-    if (pathHistory.length <= 1) return;
-
-    pathHistory.pop();
-
-    picks.pop();
-
-    const previous =
-        pathHistory[pathHistory.length - 1];
-
-    historyDiv.innerHTML =
-        "Current Picks:<br>" +
-        picks.join(" → ");
-
-    document.getElementById("round-display")
-        .innerHTML =
-        "Round " + (picks.length + 1);
-
-    showOptions(previous);
-};
 function showOptions(key) {
-const options = data[key];
+
     optionsDiv.innerHTML = "";
 
     const options = data[key];
 
     if (!options || options.length === 0) {
-
-        optionsDiv.innerHTML =
-`
-<div style="
-    text-align:center;
-    padding:30px;
-">
-    <div style="
-        font-size:56px;
-        margin-bottom:15px;
-    ">
-        🏆
-    </div>
-
-    <h2 style="
-        color:#8cff96;
-        margin-bottom:15px;
-    ">
-        Draft Path Complete
-    </h2>
-
-    <p>
-        You've reached the end of this
-        draft recommendation path.
-    </p>
-
-    <p style="
-        font-size:18px;
-        margin-top:20px;
-    ">
-        Good luck this season!
-    </p>
-</div>
-`;
-
+        optionsDiv.innerHTML = "<h3>You Got It From Here</h3>";
         return;
     }
 
-    options.forEach(option => {
-
-        // button code goes here
-
-    });
-}
     options.forEach(option => {
 
         const btn = document.createElement("button");
@@ -971,7 +420,7 @@ const options = data[key];
        btn.innerHTML =
 `
 <div style="text-align:center;">
-    <div class="position-label ${positions[option]}">
+    <div class="position-label">
         ${positions[option] || ""}
     </div>
 
@@ -996,37 +445,7 @@ const options = data[key];
 
     document.getElementById("round-display").innerHTML =
         "Round " + (picks.length + 1);
-          
-pathHistory.push(option);
-    showOptions(option);
-};
 
-        optionsDiv.appendChild(btn);
-    });
-}
-
-</script>
-    
-</body>
-</html>
-        
-      btn.onclick = () => {
-
-    const selectedPlayer =
-        playerName(option);
-
-    showPickPopup(option);
-
-    picks.push(selectedPlayer);
-
-    historyDiv.innerHTML =
-        "Current Picks:<br>" +
-        picks.join(" → ");
-
-    document.getElementById("round-display").innerHTML =
-        "Round " + (picks.length + 1);
-          
-pathHistory.push(option);
     showOptions(option);
 };
 
