@@ -308,7 +308,7 @@ Personal Draft Planner
 </div>
 
 <div id="history">
-Current Picks:
+<strong>📋 Draft History</strong>
 </div>
 
 <div id="round-display">
@@ -566,9 +566,9 @@ if (!options || options.length === 0) {
 
     picks.push(selectedPlayer);
 
-    historyDiv.innerHTML =
-        "Current Picks:<br>" +
-        picks.join(" → ");
+historyDiv.innerHTML =
+    "<strong>📋 Draft History</strong><br><br>" +
+    picks.join(" → ");
 
     document.getElementById("round-display").innerHTML =
         "Round " + (picks.length + 1);
