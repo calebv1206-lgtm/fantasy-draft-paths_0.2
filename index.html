@@ -138,25 +138,6 @@ box-shadow:
     text-transform: uppercase;
 
     letter-spacing: 1px; 
-.position-label {
-    display: inline-block;
-
-    font-size: 11px;
-    font-weight: bold;
-
-    color: white;
-
-    border-radius: 999px;
-
-    padding: 3px 10px;
-
-    margin-bottom: 6px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1px;
-}
-
 }      
 .position-label.WR {
     background: #1565c0;
@@ -471,20 +452,8 @@ document
         pathHistory[pathHistory.length - 1];
 
 historyDiv.innerHTML =
-    "<strong>📋 Draft History</strong><br><br>";
-
-picks.forEach((pick, index) => {
-
-    historyDiv.innerHTML +=
-        `<div style="
-            margin-bottom:8px;
-            padding:8px;
-            background:rgba(255,255,255,.08);
-            border-radius:8px;
-        ">
-            ${pick}
-        </div>`;
-});
+    "<strong>📋 Draft History</strong><br><br>" +
+    picks.join(" → ");
 
     document.getElementById("round-display")
         .innerHTML =
