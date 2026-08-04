@@ -117,17 +117,13 @@ h1 {
 
     backdrop-filter: blur(6px);
 }
-    .position-label {
+   .position-label {
     display: inline-block;
 
     font-size: 11px;
     font-weight: bold;
 
     color: white;
-
-    background: rgba(255,255,255,.15);
-
-    border: 1px solid rgba(255,255,255,.20);
 
     border-radius: 999px;
 
@@ -138,6 +134,25 @@ h1 {
     text-transform: uppercase;
 
     letter-spacing: 1px;
+}
+    .position-label.WR {
+    background: #1565c0;
+}
+
+.position-label.RB {
+    background: #2e7d32;
+}
+
+.position-label.QB {
+    background: #6a1b9a;
+}
+
+.position-label.TE {
+    background: #ef6c00;
+}
+
+.position-label.K {
+    background: #607d8b;
 }
 /* Draft buttons */
 button {
@@ -280,6 +295,12 @@ Current Picks:
 Round 1
 </div>
 
+<div style="text-align:center;">
+    <button id="back-button">
+        ← Undo Last Pick
+    </button>
+</div>
+
 <div id="options">
 </div>
 
@@ -298,6 +319,7 @@ const optionsDiv = document.getElementById("options");
 const historyDiv = document.getElementById("history");
 
 let picks = [];
+let pathHistory = ["START"];
 
 Promise.all([
     fetch(PATHS_URL).then(r => r.text()),
@@ -402,17 +424,80 @@ popup.innerHTML =
 
     }, 1500);
 }
-function showOptions(key) {
+    document
+    .getElementById("back-button")
+    .onclick = () => {
 
+    if (pathHistory.length <= 1) return;
+
+    pathHistory.pop();
+
+    picks.pop();
+
+    const previous =
+        pathHistory[pathHistory.length - 1];
+
+    historyDiv.innerHTML =
+        "Current Picks:<br>" +
+        picks.join(" → ");
+
+    document.getElementById("round-display")
+        .innerHTML =
+        "Round " + (picks.length + 1);
+
+    showOptions(previous);
+};
+function showOptions(key) {
+const options = data[key];
     optionsDiv.innerHTML = "";
 
     const options = data[key];
 
     if (!options || options.length === 0) {
-        optionsDiv.innerHTML = "<h3>You Got It From Here</h3>";
+
+        optionsDiv.innerHTML =
+`
+<div style="
+    text-align:center;
+    padding:30px;
+">
+    <div style="
+        font-size:56px;
+        margin-bottom:15px;
+    ">
+        🏆
+    </div>
+
+    <h2 style="
+        color:#8cff96;
+        margin-bottom:15px;
+    ">
+        Draft Path Complete
+    </h2>
+
+    <p>
+        You've reached the end of this
+        draft recommendation path.
+    </p>
+
+    <p style="
+        font-size:18px;
+        margin-top:20px;
+    ">
+        Good luck this season!
+    </p>
+</div>
+`;
+
         return;
     }
 
+    options.forEach(option => {
+
+        // button code goes here
+
+    });
+}
     options.forEach(option => {
 
         const btn = document.createElement("button");
@@ -420,7 +505,7 @@ function showOptions(key) {
        btn.innerHTML =
 `
 <div style="text-align:center;">
-    <div class="position-label">
+    <div class="position-label ${positions[option]}">
         ${positions[option] || ""}
     </div>
 
@@ -445,7 +530,8 @@ function showOptions(key) {
 
     document.getElementById("round-display").innerHTML =
         "Round " + (picks.length + 1);
-
+          
+pathHistory.push(option);
     showOptions(option);
 };
 
