@@ -156,23 +156,24 @@ h1 {
 }      
 .position-label.WR {
     background: #1565c0;
+    box-shadow: 0 0 10px rgba(21,101,192,.5);
 }
 
 .position-label.RB {
     background: #b71c1c;
+    box-shadow: 0 0 10px rgba(183,28,28,.5);
 }
 
 .position-label.QB {
     background: #6a1b9a;
+    box-shadow: 0 0 10px rgba(106,27,154,.5);
 }
 
 .position-label.TE {
     background: #00cfe8;
+    box-shadow: 0 0 10px rgba(0,207,232,.5);
 }
 
-.position-label.K {
-    background: #607d8b;
-}
 /* Draft buttons */
 button {
     width: 100%;
@@ -403,6 +404,13 @@ popup.innerHTML =
     color:#8cff96;
     letter-spacing:2px;
 ">
+<div style="
+    font-size:18px;
+    color:#cccccc;
+    margin-bottom:10px;
+">
+    ROUND ${picks.length + 1}
+</div>
     DRAFT PICK
 </div>
 
@@ -457,9 +465,21 @@ document
     const previous =
         pathHistory[pathHistory.length - 1];
 
-    historyDiv.innerHTML =
-        "Current Picks:<br>" +
-        picks.join(" → ");
+historyDiv.innerHTML =
+    "<strong>📋 Draft History</strong><br><br>";
+
+picks.forEach((pick, index) => {
+
+    historyDiv.innerHTML +=
+        `<div style="
+            margin-bottom:8px;
+            padding:8px;
+            background:rgba(255,255,255,.08);
+            border-radius:8px;
+        ">
+            ${pick}
+        </div>`;
+});
 
     document.getElementById("round-display")
         .innerHTML =
@@ -495,10 +515,18 @@ if (!options || options.length === 0) {
         Draft Path Complete
     </h2>
 
-    <p>
-        You've reached the end of this
-        draft recommendation path.
-    </p>
+  <p>
+    Final Draft:
+</p>
+
+<p style="
+    display:inline-block;
+    text-align:left;
+    margin-top:15px;
+    line-height:1.8;
+">
+    ${picks.join("<br>")}
+</p>
 
     <p style="
         font-size:18px;
